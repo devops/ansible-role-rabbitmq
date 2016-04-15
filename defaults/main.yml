@@ -1,0 +1,19 @@
+---
+# defaults file for ansible-role-rabbitmq
+rabbitmq_cluster: Flase
+
+# Cluster information
+rabbitmq_erlang_cookie: OMZWYPRFPJDAUGKDSXAP
+rabbitmq_cluster_master: localhost
+
+# User Configure
+rabbitmq_users:
+  - user: admin
+    password: admin
+    vhost: /
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+
+rabbitmq_users_removed:
+  - guest

@@ -1,0 +1,18 @@
+---
+# tasks for rabbitmq  user configure
+
+- name: Ensure the users is removed
+  rabbitmq_user: user="{{ item }}" state=absent
+  with_items: rabbitmq_users_removed
+  when: ansible_hostname == rabbitmq_cluster_master
+
+- name: Ensure the users is present
+  rabbitmq_user:
+    user: "{{ item.user }}"
+    password: "{{ item.password }}"
+    configure_priv: "{{ item.configure_priv|default('.*') }}"
+    read_priv: "{{ item.read_priv|default('.*') }}"
+    write_priv: "{{ item.write_priv|default('.*') }}"
+    vhost: "{{ item.vhost|default('/') }}"
+  with_items: rabbitmq_users
+  when: ansible_hostname == rabbitmq_cluster_master

@@ -1,0 +1,14 @@
+---
+# tasks for rabbitmq Configure
+
+- name: Ensure cookies are the same between all nodes (clustering).
+  template:
+    src=erlang.cookie.j2
+    dest=/var/lib/rabbitmq/.erlang.cookie
+    owner=rabbitmq
+    group=rabbitmq
+    mode=0400
+  when: rabbitmq_cluster
+
+- name: Ensure rabbitmq service is started and enabled at boot.
+  service: name=rabbitmq-server state=started enabled=yes

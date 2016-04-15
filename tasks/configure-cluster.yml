@@ -1,0 +1,20 @@
+---
+# tasks for rabbitmq Cluster Configure
+
+- name: stop rabbitmq server (clustering).
+  service: name=rabbitmq-server state=stopped
+
+- name: start rabbitmq server (clustering).
+  service: name=rabbitmq-server state=started
+
+- name: stop rabbitmq app (clustering).
+  shell: rabbitmqctl stop_app
+
+- name: resetting rabbitmq app (clustering).
+  shell: rabbitmqctl reset
+
+- name: add this node to cluster (clustering).
+  shell: rabbitmqctl join_cluster rabbit@{{ rabbitmq_cluster_master }}
+
+- name: start rabbitmq app (clustering).
+  shell: rabbitmqctl start_app

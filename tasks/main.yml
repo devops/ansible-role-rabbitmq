@@ -1,0 +1,27 @@
+---
+# tasks file for ansible-role-rabbitmq
+
+# Variable setup.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Setup/install tasks.
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+# Configure.
+- include: configure.yml
+
+# Configure Cluster.
+- include: configure-cluster.yml
+  when: 'rabbitmq_cluster and (ansible_hostname != rabbitmq_cluster_master)'
+
+- name: set rabbitmq ha policy (clustering).
+  rabbitmq_policy:
+    name="ha-all"
+    pattern="^(?!amq\.).*"
+    tags="ha-mode=all"
+  when: 'rabbitmq_cluster and (ansible_hostname == rabbitmq_cluster_master)'
+
+# Users Configure.
+- include: users.yml

@@ -1,0 +1,16 @@
+---
+# test file
+
+- name: Install RabbitMQ.
+  hosts: servers
+  roles:
+    - role: ansible-role-rabbitmq
+      rabbitmq_cluster: True
+      rabbitmq_cluster_master: controller01
+      rabbitmq_users:
+        - user: openstack
+          password: openstack
+          vhost: /
+          configure_priv: .*
+          read_priv: .*
+          write_priv: .*
