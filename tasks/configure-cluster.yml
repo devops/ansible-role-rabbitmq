@@ -2,10 +2,14 @@
 # tasks for rabbitmq Cluster Configure
 
 - name: stop rabbitmq server (clustering).
-  service: name=rabbitmq-server state=stopped
+  service:
+    name: rabbitmq-server
+    state: stopped
 
 - name: start rabbitmq server (clustering).
-  service: name=rabbitmq-server state=started
+  service:
+    name: rabbitmq-server
+    state: started
 
 - name: stop rabbitmq app (clustering).
   shell: rabbitmqctl stop_app

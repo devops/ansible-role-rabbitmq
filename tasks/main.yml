@@ -18,10 +18,12 @@
 
 - name: set rabbitmq ha policy (clustering).
   rabbitmq_policy:
-    name="ha-all"
-    pattern="^(?!amq\.).*"
-    tags="ha-mode=all"
-  when: 'rabbitmq_cluster and (ansible_hostname == rabbitmq_cluster_master)'
+    name: "ha-all"
+    pattern: '^(?!amq\.).*'
+    tags: "ha-mode=all"
+  delegate_to: "{{ groups['rabbitmq'][0] }}"
+  run_once: True
+  when: rabbitmq_cluster
 
 # Users Configure.
 - include: users.yml

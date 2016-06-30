@@ -2,6 +2,8 @@
 # tasks file for RedHat
 
 - name: RedHat | Install Packages
-  yum: name={{ item }} state=installed
+  yum:
+    name: "{{ item }}"
+    state: installed
   with_items:
     - rabbitmq-server
